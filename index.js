@@ -18,9 +18,10 @@ var next = $('.function-button__forward');
 var back = $('.function-button__backward');
 var repeat = $('.function-button__repeat');
 var shuffle = $('.function-button__shuffle');
-var playerSong = $('.player__song');
+var playerSong = $('.player__song .player-body');
 var playList = $('.player__playlist #playlist');
-console.log(playerSong);
+var favorite = $('.player__favorite i');
+console.log(favorite);
 
 
 
@@ -135,9 +136,9 @@ const app = {
     renderPlaylist: function () {
         const _this = this;
         document.querySelector('.player__playlist p.text-pale').innerHTML = this.songs.length + `${this.songs.length < 2 ? ' song' : ' songs'}`;
-        var htmls = this.songs.map(song => {
+        var htmls = this.songs.map((song, index) => {
             return `
-            <li class="row list-group-item d-flex align-items-center justify-content-between flex-row song-item" >
+            <li class="row list-group-item d-flex align-items-center justify-content-between flex-row song-item ${index === _this.currentSongIndex - 1 ? 'song-item-active' : ''}" >
                 <p class="col-sm-1 col-1 song-index">${song.songIndex}</p>
                 <div class="col-sm-3 col-3 song-thumbnail"
                     style="background-image: url(${song.songThumb})"></div>
@@ -152,11 +153,39 @@ const app = {
         var html = htmls.join('');
         playList.innerHTML = html;
 
+        //scroll active song into view 
+
+        setTimeout(function () {
+            $('.song-item-active').scrollIntoView({
+                behavior: "smooth", block: "nearest"
+            })
+        }, 300);
+
+        // click on song
+        $$('.playlist .song-item').forEach((song_item) => {
+            song_item.onclick = function () {
+                _this.currentSongIndex = parseInt(song_item.children[0].textContent);
+                _this.renderPlaylist();
+                _this.loadCurrentSong();
+                _this.isPlaying = true;
+                audio.play();
+            }
+
+        });
+
+        //Favorite song
+
+        $$('.playlist .song-item .song-favorite .fa-heart').forEach(element => {
+            element.onclick = () => {
+                console.log(element)
+                element.style.fontWeight = '900!important';
+                element.style.color = '#000';
+            }
+        });
     },
     playMusic: function () {
         const _this = this;
         this.handleSongProgress();
-        //Play button clicked
 
         // When play button clicked
         audio.onplay = function () {
@@ -179,25 +208,6 @@ const app = {
         // Set height playlist 
         playList.style.height = playerSong.offsetHeight + 'px';
 
-
-        // Song start to play when song item is clicked
-        const observer = new MutationObserver(function (mutations_list) {
-            mutations_list.forEach(function (mutation) {
-                mutation.addedNodes.forEach(function (added_node) {
-                    added_node.onclick = function () {
-                        added_node.classList.add('song-item-active');
-                        // _this.currentSongIndex = ;
-                        _this.loadCurrentSong();
-                        _this.isPlaying = true;
-                        audio.play();
-                    }
-                });
-            });
-        });
-
-        observer.observe(document.querySelector(".player__playlist #playlist"), { subtree: false, childList: true });
-
-
         // Play/Pause 
         playBtn.onclick = function () {
             if (!_this.isPlaying) {
@@ -217,6 +227,7 @@ const app = {
             }
             else {
                 _this.playNext();
+                _this.renderPlaylist();
             }
         }
 
@@ -235,11 +246,9 @@ const app = {
             _this.isRepeated = false;
             _this.isShuffle = !_this.isShuffle;
             shuffle.classList.toggle("active", _this.isShuffle);
-            console.log(_this.isShuffle);
             repeat.classList.remove("active");
 
         }
-
     },
     playRandom: function () {
         let _this = this;
@@ -248,9 +257,14 @@ const app = {
             nextIndex = Math.floor(Math.random() * _this.songs.length);
         } while (nextIndex === _this.currentSongIndex);
         this.currentSongIndex = nextIndex;
+        console.log(this.currentSongIndex);
     },
     playNext: function () {
-        this.next();
+        if (this.isShuffle) {
+            this.playRandom();
+        } else {
+            this.next();
+        }
         this.loadCurrentSong();
         audio.play();
     },
@@ -273,6 +287,7 @@ const app = {
             _this.loadCurrentSong();
             _this.isPlaying = true;
             audio.play();
+            _this.renderPlaylist();
         }
     },
     prev: function () {
@@ -287,7 +302,6 @@ const app = {
         back.onclick = function () {
             if (_this.isShuffle === false) {
                 _this.prev();
-                // console.log(_this.currentSongIndex);
             } else {
                 _this.playRandom();
 
@@ -295,6 +309,7 @@ const app = {
             _this.loadCurrentSong();
             _this.isPlaying = true;
             audio.play();
+            _this.renderPlaylist();
         }
     },
     handleSongProgress: function () {
@@ -337,7 +352,6 @@ const app = {
         this.handleEvent();
         this.nextSong();
         this.prevSong();
-        // this.playNext();
         this.playMusic();
         this.renderPlaylist()
     },

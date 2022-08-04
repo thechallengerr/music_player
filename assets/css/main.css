@@ -172,10 +172,20 @@ i[class*="fa-"]:hover {
     margin-bottom: 0;
 }
 
+.favorited .fa-regular {
+    /* color: #000; */
+    font-weight: 900;
+
+}
+
 .playlist .song-body .song-name {}
 
 .playlist .song-item-active {
-    background-color: #000000;
+    background-color: #999999;
+    color: #fff !important;
+}
+
+.song-item-active>* {
     color: #fff !important;
 }
 
