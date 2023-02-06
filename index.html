@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/1bb0af4ea1.js" crossorigin="anonymous"></script>
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <title>Music</title>
+</head>
+
+<body>
+    <div class="header bg-black" id="header">
+
+        <a href="/" class="header-logo p-2">
+            <div class="header-logo__img">
+                <img src="/assets/img/logo.svg" alt="">
+            </div>
+            <div class="header-logo__text text-white text-center text-uppercase fw-bold">HOOLA Music</div>
+        </a>
+        <div class="menu-bars">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+    </div>
+    <div id="main" class="bg-white container">
+        <div class="row">
+            <div class="navigation col-sm-3">
+                <div class="user_display d-flex flex-column align-items-center">
+                    <div class="user_display__img cursor-pointer">
+
+                    </div>
+                    <div class="user_display__name text-black">
+                        <p class="name fw-bold mt-1 cursor-pointer" style="margin-bottom: 0px!important;">
+                            No Body
+                        </p>
+                    </div>
+                    <div class="user_display__email text-black">
+                        <p class="email">
+                            nobody@example.com
+                        </p>
+                    </div>
+                </div>
+                <div class="side-nav">
+                    <div class="top ms-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> <i class="fa-solid fa-home me-3"></i>Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fa-solid fa-table-list me-3"></i></i>Browse</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fa-solid fa-compact-disc me-3"></i>Album</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i
+                                        class="fa-solid fa-universal-access me-3"></i>Artists</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fa-solid fa-clapperboard me-3"></i>Videos</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bottom ms-3">
+                        <div class="mt-3 fw-semibold text-black">
+                            My Music
+                        </div>
+                        <ul class="nav flex-column personal">
+                            <li class="nav-item personal__recent_play">
+                                <a class="nav-link" href="#"><i class="fa-solid fa-clock-rotate-left me-3"></i>Recenct
+                                    Played</a>
+                            </li>
+                            <li class="nav-item personal__file">
+                                <a class="nav-link" href="#"><i class="fa-solid fa-file me-3"></i>Local files</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-sm-9 bg-white rounded">
+
+                <div class=" play_area ">
+                    <div class="section section__player row mt-5 ms-3">
+                        <div class="col-sm-7 player__playlist">
+                            <p class="fw-bold fs-3 text-black mb-2">Playlist</p>
+                            <p class=" text-pale"></p>
+                            <ul class="playlist p-0 box-shadow-lite" id="playlist">
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-5 player__song">
+                            <p class="fw-bold fs-3 text-black mb-5">Now Playing</p>
+                            <!-- <p class=" text-pale"></p> -->
+                            <div class="player-body bg-light box-shadow-lite rounded-3">
+                                <div class="song-body d-flex align-items-center ">
+                                    <div class="song-thumbnail thumbnail-image"
+                                        style="background-image: url(/assets/img/the_champion.jpg);">
+
+                                    </div>
+                                    <div class="song-info">
+                                        <div class="song-name cursor-pointer fw-bold">
+                                            The Champion
+                                        </div>
+                                        <div class="song-artist cursor-pointer">
+                                            Kun Aguero
+                                        </div>
+                                    </div>
+
+                                    <div class="song-progress d-inline-block text-black">
+                                        <input type="range" id="duration-bar" class="duration-bar" value="0" step="1"
+                                            min="0" max="100">
+                                    </div>
+                                    <div class="duration-text d-flex flex-row text-black">
+                                        <p class="duration-past text-left">
+                                            0:00
+                                        </p>
+                                        <p class="duration-left text-right">0:00</p>
+                                    </div>
+
+                                    <audio id="audio">
+                                        <source src="/assets/audio/the_champion.mp3" type="audio/mpeg">
+                                    </audio>
+                                    <div class="function-buttons d-flex flex-row justify-content-between text-black">
+                                        <div class="function-button__shuffle p-3">
+                                            <i class="fa-solid fa-shuffle"></i>
+                                        </div>
+                                        <div class="function-button__backward p-3">
+                                            <i class="fa-solid fa-backward-fast"></i>
+                                        </div>
+                                        <div class="function-button__play p-3">
+                                            <i class="fa-solid fa-play"></i>
+                                        </div>
+                                        <div class="function-button__forward p-3">
+                                            <i class="fa-solid fa-forward-fast"></i>
+                                        </div>
+                                        <div class="function-button__repeat p-3">
+                                            <i class="fa-solid fa-repeat"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
